@@ -11,7 +11,7 @@ import { headerNav } from '@/constants'
             <nav class="header__nav" :class="{ show: isNavVisible }" role="navigation" aria-label="메인 메뉴">
                 <ul>
                     <li v-for="(nav, key) in headerNav" :key="key">
-                        <a :href="nav.url">{{ nav.title }}</a>
+                        <a :href="nav.url" @click="scrollLink($event)">{{ nav.title }}</a>
                     </li>
                 </ul>
             </nav>
@@ -32,6 +32,15 @@ export default {
     methods: {
         toggleNav() {
             this.isNavVisible = !this.isNavVisible
+        },
+        scrollLink(e) {
+            e.preventDefault()
+            const target = e.target.getAttribute('href')
+            const offsetTop = document.querySelector(target).offsetTop
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            })
         }
     }
 }
@@ -50,7 +59,7 @@ export default {
         padding: 1rem;
 
         .header__logo {
-            font-size: 0.9rem;
+            font-size: 2rem;
             text-align: center;
             text-transform: uppercase;
             line-height: 1;
